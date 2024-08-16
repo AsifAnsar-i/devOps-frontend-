@@ -1,3 +1,4 @@
+# .github/workflows/frontend-ci.yml
 name: Frontend CI
 
 on:
@@ -35,3 +36,9 @@ jobs:
 
       - name: Push Docker image
         run: docker push asifansari1999/frontend:latest
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-build-complete
+          path: ./dist  # This could be any file or directory
