@@ -49,7 +49,7 @@ jobs:
             RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
           run: |
             curl -X POST \
-            -H "Authorization: Bearer rnd_zmshEwNW79KxljVVv1eaIZP0sMdc" \
+            -H "Authorization: Bearer rnd_rXdcjHWPz7BR47MSbv6eP2SlRRmA" \
             -H "Content-Type: application/json" \
             -d '{"serviceId": "srv-cqvnb48gph6c738vi720", "clearCache": false}' \
             https://api.render.com/v1/services/srv-cqvnb48gph6c738vi720/deploys
