@@ -7,7 +7,7 @@ import {
   UserType,
 } from "../shared/types";
 import { BookingFormData } from "./forms/BookingForm/BookingForm";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 export const fetchCurrentUser = async (): Promise<UserType> => {
   const response = await fetch(`${API_BASE_URL}/api/users/me`, {
@@ -196,14 +196,17 @@ export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
 
 export const createPaymentIntent = async (
   hotelId: string,
-  numberOfNights: string
+  numberOfNights: string,
+  description:string,
+  name:string,
+  address:string
 ): Promise<PaymentIntentResponse> => {
   const response = await fetch(
     `${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`,
     {
       credentials: "include",
       method: "POST",
-      body: JSON.stringify({ numberOfNights }),
+      body: JSON.stringify({ numberOfNights,description,name,address }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -233,8 +236,7 @@ export const createRoomBooking = async (formData: BookingFormData) => {
   if (!response.ok) {
     throw new Error("Error booking room");
   }
-   return response.json();
-  
+  return response.json();
 };
 
 export const fetchMyBookings = async (): Promise<HotelType[]> => {

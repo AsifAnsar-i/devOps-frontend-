@@ -50,4 +50,7 @@ export type UserType = {
     paymentIntentId: string;
     clientSecret: string;
     totalCost: number;
+    description:string;
+    name:string,
+    address:string
   };

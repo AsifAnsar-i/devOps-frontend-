@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import Toast from "../components/Toast";
 import { useQuery } from "react-query";
 import * as apiClient from "../api-client";
@@ -17,7 +17,7 @@ type AppContext = {
   stripePromise: Promise<Stripe | null>;
 };
 
-const AppContext = React.createContext<AppContext | undefined>(undefined);
+const AppContext = createContext<AppContext | undefined>(undefined);
 
 const stripePromise = loadStripe(STRIPE_PUB_KEY);
 

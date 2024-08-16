@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 type SearchContext = {
   destination: string;
@@ -16,7 +16,7 @@ type SearchContext = {
   ) => void;
 };
 
-const SearchContext = React.createContext<SearchContext | undefined>(undefined);
+const SearchContext = createContext<SearchContext | undefined>(undefined);
 
 type SearchContextProviderProps = {
   children: React.ReactNode;

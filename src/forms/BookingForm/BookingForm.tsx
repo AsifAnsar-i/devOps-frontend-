@@ -1,8 +1,5 @@
 import { useForm } from "react-hook-form";
-import {
-  PaymentIntentResponse,
-  UserType,
-} from "../../../shared/types";
+import { PaymentIntentResponse, UserType } from "../../../shared/types";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElement } from "@stripe/stripe-js";
 import { useSearchContext } from "../../contexts/SearchContext";
@@ -67,14 +64,26 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
 
   const onSubmit = async (formData: BookingFormData) => {
     if (!stripe || !elements) {
+      showToast({ message: "Stripe.js has not yet loaded.", type: "ERROR" });
+      return;
+    }
+
+    const cardElement = elements.getElement(CardElement);
+
+    if (!cardElement) {
+      showToast({ message: "Card details are missing.", type: "ERROR" });
       return;
     }
 
     const result = await stripe.confirmCardPayment(paymentIntent.clientSecret, {
       payment_method: {
-        card: elements.getElement(CardElement) as StripeCardElement,
+        card: cardElement as StripeCardElement,
+        billing_details: {
+          name: `${formData.firstName} ${formData.lastName}`,
+        },
       },
     });
+    console.log(result);
 
     if (result.paymentIntent?.status === "succeeded") {
       bookRoom({ ...formData, paymentIntentId: result.paymentIntent.id });

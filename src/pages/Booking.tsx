@@ -25,19 +25,40 @@ const Booking = () => {
     }
   }, [search.checkIn, search.checkOut]);
 
-  const { data: paymentIntentData } = useQuery(
+  const {
+    data: currentUser,
+    isLoading: isUserLoading,
+    error: userError,
+  } = useQuery("fetchCurrentUser", apiClient.fetchCurrentUser);
+
+  const description = `Booking for ${numberOfNights} nights at hotel ${hotelId}`;
+
+  const address = "Faizabad,India";
+  const name = "Asif";
+  const {
+    data: paymentIntentData,
+    isLoading: isPaymentIntentLoading,
+    error: paymentIntentError,
+  } = useQuery(
     "createPaymentIntent",
     () =>
       apiClient.createPaymentIntent(
         hotelId as string,
-        numberOfNights.toString()
+        numberOfNights.toString(),
+        description,
+        name,
+        address
       ),
     {
       enabled: !!hotelId && numberOfNights > 0,
     }
   );
 
-  const { data: hotel } = useQuery(
+  const {
+    data: hotel,
+    isLoading: isHotelLoading,
+    error: hotelError,
+  } = useQuery(
     "fetchHotelByID",
     () => apiClient.fetchHotelById(hotelId as string),
     {
@@ -45,13 +66,16 @@ const Booking = () => {
     }
   );
 
-  const { data: currentUser } = useQuery(
-    "fetchCurrentUser",
-    apiClient.fetchCurrentUser
-  );
+  if (isHotelLoading || isUserLoading || isPaymentIntentLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (hotelError || userError || paymentIntentError) {
+    return <div>Error loading data. Please try again later.</div>;
+  }
 
   if (!hotel) {
-    return <></>;
+    return <div>No hotel data available.</div>;
   }
 
   return (
