@@ -2,10 +2,9 @@
 name: Frontend CD
 
 on:
-    workflow_run:
-        workflows: ["Frontend CI"]  # Make sure this matches the exact name of your CI workflow
-        types:
-          - completed
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
