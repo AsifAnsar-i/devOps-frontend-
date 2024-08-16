@@ -44,12 +44,8 @@ jobs:
     needs: build-and-push
 
     steps:
-        - name: Deploy to Render
-          env:
-            RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-          run: |
-            curl -X POST \
-            -H "Authorization: Bearer rnd_rXdcjHWPz7BR47MSbv6eP2SlRRmA" \
-            -H "Content-Type: application/json" \
-            -d '{"serviceId": "srv-cqvnb48gph6c738vi720", "clearCache": false}' \
-            https://api.render.com/v1/services/srv-cqvnb48gph6c738vi720/deploys
+      - name: Deploy to Render
+        uses: asifansari/render-deploy-action@v0.0.8
+        with: 
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
