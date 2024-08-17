@@ -48,7 +48,7 @@ jobs:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
           curl -X POST \
-          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-          -H "Content-Type: application/json" \
-          -d '{"serviceId": "${{ secrets.RENDER_FRONTEND_SERVICE_ID }}", "clearCache": false}' \
-          https://api.render.com/v1/services/${{ secrets.RENDER_FRONTEND_SERVICE_ID }}/deploys
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"serviceId": "${{ secrets.SERVICE_ID }}", "clearCache": false}' \
+            https://api.render.com/v1/services/${{ secrets.SERVICE_ID }}/deploys
