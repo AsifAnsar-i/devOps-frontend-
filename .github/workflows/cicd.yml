@@ -47,8 +47,10 @@ jobs:
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
+          service_id="${{ secrets.SERVICE_ID }}"
+          json_payload=$(jq -n --arg serviceId "$service_id" '{serviceId: $serviceId, clearCache: false}')
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
-            -d '{"serviceId": "'"${{ secrets.SERVICE_ID }}"'", "clearCache": false}' \
-            https://api.render.com/v1/services/${{ secrets.SERVICE_ID }}/deploys
+            -d "$json_payload" \
+            https://api.render.com/v1/services/$service_id/deploys
