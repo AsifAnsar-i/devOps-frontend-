@@ -48,7 +48,7 @@ jobs:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
           service_id="${{ secrets.SERVICE_ID }}"
-          json_payload=$(jq -n --arg serviceId "$service_id" '{serviceId: $serviceId, clearCache: false}')
+          json_payload=$(jq -n --arg serviceId "$service_id" '{serviceId: $serviceId}')
         
           # Debug: Print the JSON payload
           echo "JSON Payload: $json_payload"
