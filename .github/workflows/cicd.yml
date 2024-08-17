@@ -49,6 +49,11 @@ jobs:
         run: |
           service_id="${{ secrets.SERVICE_ID }}"
           json_payload=$(jq -n --arg serviceId "$service_id" '{serviceId: $serviceId, clearCache: false}')
+        
+          # Debug: Print the JSON payload
+          echo "JSON Payload: $json_payload"
+        
+          # Make the API request
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
